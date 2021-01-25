@@ -41,12 +41,48 @@ app.get('/tournaments',  (req, res) => {
     .catch(err =>console.error(err));
 })
 
+const FBAuth = (req, res, next) => {
+  let idToken;
+  if(req.headers.authorization && req.headers.authorization.startsWith('Bearer ')){
+    console.log("omg");
+    idToken = req.headers.authorization.split('Bearer ')[1];
+  } else {
+    console.error('No token found')
+    return res.status(403).json({error: 'Unauthorized'});
+  }
 
-app.post('/tournament', (req, res) => {
+  admin.auth().verifyIdToken(idToken)
+    .then(decodedToken => {
+      req.user = decodedToken;
+      console.log("decoded TOEKN: ", decodedToken);
+      return db.collection('users')
+        .where('userId', '==', req.user.uid)
+        .limit(1)
+        .get();
+    })
+    .then(data => {
+      console.log('DATAAA: ', data);
+      req.user.handle = data.docs[0].data().handle;
+      return next();
+    })
+    .catch(err => {
+      console.error('Error while verifying token ', err);
+      return res.status(403).json(err);
+    })
+}
+
+
+
+app.post('/tournament', FBAuth, (req, res) => {
+
+  //TODO: add input validation
+  if(req.body.name.trim() === '') {
+    return res.status(400).json({ name: 'Name must not be empty'});
+  }
 
   const newTournament = {
     name: req.body.name,
-    userHandle: req.body.userHandle,
+    userHandle: req.user.handle,
     createdAt: new Date().toISOString()
   };
 
