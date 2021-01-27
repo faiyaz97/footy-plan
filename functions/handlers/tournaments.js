@@ -46,3 +46,70 @@ exports.getAllTournaments = (req, res) => {
       });
     
   }
+
+
+
+  exports.getTournament = (req, res) => {
+    let tournamentData = {};
+    db.doc(`/tournaments/${req.params.tournamentId}`)
+      .get()
+      .then((doc) => {
+        if (!doc.exists) {
+          return res.status(404).json({ error: 'Tournament not found' });
+        }
+        tournamentData = doc.data();
+        tournamentData.tournamentId = doc.id;
+        return db
+          .collection('comments')
+          .orderBy('createdAt', 'desc')
+          .where('tournamentId', '==', req.params.tournamentId)
+          .get();
+      })
+      .then((data) => {
+        tournamentData.comments = [];
+        data.forEach((doc) => {
+          tournamentData.comments.push(doc.data());
+        });
+        return res.json(tournamentData);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).json({ error: err.code });
+      });
+  };
+
+
+  exports.commentOnTournament = (req, res) => {
+    if (req.body.body.trim() === '')
+      return res.status(400).json({ comment: 'Must not be empty' });
+      
+  
+    console.log("IMAGE: ", req.user);
+    const newComment = {
+      body: req.body.body,
+      createdAt: new Date().toISOString(),
+      tournamentId: req.params.tournamentId,
+      userHandle: req.user.handle,
+      userImage: req.user.imageUrl
+    };
+    console.log(newComment);
+  
+    db.doc(`/tournaments/${req.params.tournamentId}`)
+      .get()
+      .then((doc) => {
+        if (!doc.exists) {
+          return res.status(404).json({ error: 'Tournament not found' });
+        }
+        return doc.ref.update({ commentCount: doc.data().commentCount + 1 });
+      })
+      .then(() => {
+        return db.collection('comments').add(newComment);
+      })
+      .then(() => {
+        res.json(newComment);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({ error: 'Something went wrong' });
+      });
+  };
