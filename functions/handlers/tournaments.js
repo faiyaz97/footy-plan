@@ -12,7 +12,9 @@ exports.getAllTournaments = (req, res) => {
             tournamentId: doc.id,
             name: doc.data().name,
             userHandle: doc.data().userHandle,
-            createdAt: doc.data().createdAt
+            createdAt: doc.data().createdAt,
+            commentCount: doc.data().commentCount,
+            userImage: doc.data().userImage
           });
         });
         return res.json(tournaments);
@@ -31,14 +33,18 @@ exports.getAllTournaments = (req, res) => {
     const newTournament = {
       name: req.body.name,
       userHandle: req.user.handle,
-      createdAt: new Date().toISOString()
+      userImage: req.user.imageUrl,
+      createdAt: new Date().toISOString(),
+      commentCount: 0
     };
   
     db
       .collection('tournaments')
       .add(newTournament)
       .then(doc => {
-        res.json({ message: `document ${doc.id} created successfully`})
+        const resTournament = newTournament;
+        resTournament.tournamentId = doc.id;
+        res.json(resTournament);
       })
       .catch(err => {
         res.status(500).json({error: 'something went wrong'})
@@ -111,5 +117,29 @@ exports.getAllTournaments = (req, res) => {
       .catch((err) => {
         console.log(err);
         res.status(500).json({ error: 'Something went wrong' });
+      });
+  };
+
+
+  exports.deleteTournament = (req, res) => {
+    const document = db.doc(`/tournaments/${req.params.tournamentId}`);
+    document
+      .get()
+      .then((doc) => {
+        if (!doc.exists) {
+          return res.status(404).json({ error: 'Tournament not found' });
+        }
+        if (doc.data().userHandle !== req.user.handle) {
+          return res.status(403).json({ error: 'Unauthorized' });
+        } else {
+          return document.delete();
+        }
+      })
+      .then(() => {
+        res.json({ message: 'Tournament deleted successfully' });
+      })
+      .catch((err) => {
+        console.error(err);
+        return res.status(500).json({ error: err.code });
       });
   };
