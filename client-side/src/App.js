@@ -13,7 +13,6 @@ import signup from './pages/signup';
 
 const theme = createMuiTheme({
   palette: {
-    palette: {
       primary: {
         light: '#33c9dc',
         main: '#00bcd4',
@@ -24,4 +23,32 @@ const theme = createMuiTheme({
         light: '#ff6333',
         main: '#ff3d00',
         dark: '#b22a00',
-        co
+        contrastText: '#fff'
+      }
+    },
+    typography: {
+      useNextariants: true
+    }
+});
+
+function App() {
+  return (
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <Router>
+          <NavBar/>
+          <div className="container">
+            <Switch>
+              <Route exact path="/" component={home}/>
+              <Route exact path="/login" component={login}/>
+              <Route exact path="/signup" component={signup}/>
+
+            </Switch>
+          </div>
+        </Router>
+      </div>
+    </ThemeProvider>
+  );
+}
+
+export default App;
