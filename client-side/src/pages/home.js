@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 
-export class home extends Component {
+import Tournament from '../components/Tournament'
+
+class home extends Component {
 
     state = {
         tournaments: null
@@ -10,7 +12,7 @@ export class home extends Component {
     componentDidMount(){
         axios.get('/tournaments')
         .then((res) =>{
-            console.log(res.data);
+            //console.log(res.data);
             this.setState({
                 tournaments: res.data
             });
@@ -20,12 +22,12 @@ export class home extends Component {
     }
     render() {
         let recentTournamentsMarkup = this.state.tournaments ? (
-            this.state.tournaments.map((tournament) => <p>{tournament.name}</p>)
+            this.state.tournaments.map((tournament) => <Tournament key={tournament.tournamentId} tournament={tournament}/>)
         ) : (
             <p>Loading...</p>
         );
         return (
-            <Grid container>
+            <Grid container spacing={2}>
                 <Grid item sm={8} xs={12}>
                     {recentTournamentsMarkup}
                 </Grid>
