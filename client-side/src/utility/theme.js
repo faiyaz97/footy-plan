@@ -21,7 +21,8 @@ export default {
     textAlign: "center"
   },
   image: {
-    margin: "10px auto 10px auto"
+    margin: "10px auto 10px auto",
+    width: "70px",
   },
   pageTitle: {
     margin: "10px auto 10px auto"
