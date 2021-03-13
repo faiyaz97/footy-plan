@@ -222,7 +222,7 @@ exports.signup = (req, res) => {
         return db.doc(`/users/${req.user.handle}`).update({ imageUrl: imageUrl });
       })
       .then(() => {
-        return res.json({message: 'Image uploeaded successfully'});
+        return res.json({message: 'Image uploaded successfully'});
       })
       .catch(err => {
         console.error(err);

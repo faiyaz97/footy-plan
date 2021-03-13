@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 import AppIcon from '../images/logo.png';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 // MUI stuff
@@ -12,58 +11,57 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+// redux stuff
+
+import {connect} from 'react-redux';
+import {signupUser} from '../redux/actions/userActions';
+
 const styles = (theme) => ({
     ...theme.forms
   });
 
-class signup extends Component {
+  class signup extends Component {
     constructor() {
-        super();
-        this.state = {
-          email: '',
-          password: '',
-          confirmPassword: '',
-          handle: '',
-          loading: false,
-          errors: {}
-        };
+      super();
+      this.state = {
+        email: '',
+        password: '',
+        confirmPassword: '',
+        handle: '',
+        errors: {}
+      };
+    }
+    componentWillReceiveProps(nextProps) {
+      if (nextProps.UI.errors) {
+        this.setState({ errors: nextProps.UI.errors });
       }
+    }
     handleSubmit = (event) => {
-        event.preventDefault();
-        this.setState({
-            loading: true
-        });
-        const newUserData = {
-            email: this.state.email,
-            password: this.state.password,
-            confirmPassword: this.state.confirmPassword,
-            handle: this.state.handle
-        }
-        axios.post('/signup', newUserData)
-            .then(res => {
-                console.log("TEST ", res.data);
-                localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`);
-                this.setState({
-                    loading: false
-                });
-                this.props.history.push('/');
-            })
-            .catch(err => {
-                this.setState({
-                    errors: err.response.data,
-                    loading: false
-                });
-            })
-
-    }
+      event.preventDefault();
+      this.setState({
+        loading: true
+      });
+      const newUserData = {
+        email: this.state.email,
+        password: this.state.password,
+        confirmPassword: this.state.confirmPassword,
+        handle: this.state.handle
+      };
+      this.props.signupUser(newUserData, this.props.history);
+    };
     handleChange = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value
-        });
-    }
+      this.setState({
+        [event.target.name]: event.target.value
+      });
+    };
     render() {
-        const { classes} = this.props;
-        const { errors, loading } = this.state;
+      const {
+        classes,
+        UI: { loading }
+      } = this.props;
+      const { errors } = this.state;
+
+
         return (
             <Grid container className={classes.form}>
                 <Grid item sm/>
@@ -99,7 +97,18 @@ class signup extends Component {
 }
 
 signup.propTypes = {
-    classes: PropTypes.object.isRequired
-}
-
-export default withStyles(styles)(signup);
+    classes: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
+    UI: PropTypes.object.isRequired,
+    signupUser: PropTypes.func.isRequired
+  };
+  
+  const mapStateToProps = (state) => ({
+    user: state.user,
+    UI: state.UI
+  });
+  
+  export default connect(
+    mapStateToProps,
+    { signupUser }
+  )(withStyles(styles)(signup));
