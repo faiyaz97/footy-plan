@@ -45,7 +45,6 @@ export const logoutUser = () => (dispatch) => {
   };
 
   export const getUserData = () => (dispatch) => {
-    console.log("user data");
     dispatch({ type: LOADING_USER });
     axios
       .get('/user')
@@ -59,7 +58,6 @@ export const logoutUser = () => (dispatch) => {
   };
   
   export const uploadImage = (formData) => (dispatch) => {
-    console.log("upload");
     dispatch({ type: LOADING_USER });
     axios
       .post('/user/image', formData)
