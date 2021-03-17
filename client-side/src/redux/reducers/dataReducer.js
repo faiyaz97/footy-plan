@@ -1,4 +1,4 @@
-import { SET_TOURNAMENTS, LOADING_DATA, DELETE_TOURNAMENT} from '../types';
+import { SET_TOURNAMENTS, LOADING_DATA, DELETE_TOURNAMENT, POST_TOURNAMENT} from '../types';
 
 const initialState = {
     tournaments: [],
@@ -25,6 +25,14 @@ export default function(state = initialState, action){
             return {
                 ...state
             };
+        case POST_TOURNAMENT:
+            return {
+                ...state,
+                tournaments: [
+                    action.payload,
+                    ...state.tournaments
+                ]
+            }
         default:
             return state;
     }

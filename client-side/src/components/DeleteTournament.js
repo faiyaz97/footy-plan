@@ -14,7 +14,11 @@ import { connect } from 'react-redux';
 import { deleteTournament } from '../redux/actions/dataActions';
 
 const styles = {
-
+    deleteButton: {
+        position: 'absolute',
+        top: '50%',
+        left: '90%'
+    }
 }
 
 export class DeleteTournament extends Component {
