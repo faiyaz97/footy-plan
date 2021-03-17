@@ -1,4 +1,4 @@
-import { SET_TOURNAMENTS, LOADING_DATA, DELETE_TOURNAMENT, POST_TOURNAMENT} from '../types';
+import { SET_TOURNAMENTS, LOADING_DATA, DELETE_TOURNAMENT, POST_TOURNAMENT, SET_TOURNAMENT} from '../types';
 
 const initialState = {
     tournaments: [],
@@ -18,6 +18,11 @@ export default function(state = initialState, action){
                 ...state,
                 tournaments: action.payload,
                 loading: false
+            };
+        case SET_TOURNAMENT:
+            return {
+                ...state,
+                tournament: action.payload
             };
         case DELETE_TOURNAMENT:
             let index = state.tournaments.findIndex(tournament => tournament.tournamentId === action.payload);

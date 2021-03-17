@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import MyButton from '../utility/MyButton';
-import DeleteTournament from './DeleteTournament'
+import MyButton from '../../utility/MyButton';
+import DeleteTournament from './DeleteTournament';
+import TournamentDialog from './TournamentDialog';
 
 // MUI stuffs
 import Card from '@material-ui/core/Card';
@@ -15,7 +16,7 @@ import Typography from '@material-ui/core/Typography';
 
 
 import { connect } from 'react-redux' ;
-import { deleteTournament } from '../redux/actions/dataActions';
+import { deleteTournament } from '../../redux/actions/dataActions';
 
 
 const styles = {
@@ -59,6 +60,7 @@ class Tournament extends Component {
                         {dayjs(createdAt).fromNow()}
                     </Typography>
                     <Typography variant="body1">{name}</Typography>
+                    <TournamentDialog tournamentId={tournamentId} userHandle={userHandle}/>
                 </CardContent>
             </Card>
 

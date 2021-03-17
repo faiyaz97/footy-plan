@@ -3,8 +3,8 @@ import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 
-import Tournament from '../components/Tournament'
-import Profile from '../components/Profile'
+import Tournament from '../components/tournament/Tournament'
+import Profile from '../components/profile/Profile'
 
 import { connect } from 'react-redux';
 import { getTournaments } from '../redux/actions/dataActions';

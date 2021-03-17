@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
-import MyButton from '../utility/MyButton';
+import MyButton from '../../utility/MyButton';
 
 // MUI Stuff
 import Button from '@material-ui/core/Button'
@@ -11,12 +11,12 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DeleteOutline from  '@material-ui/icons/DeleteOutline'
 
 import { connect } from 'react-redux';
-import { deleteTournament } from '../redux/actions/dataActions';
+import { deleteTournament } from '../../redux/actions/dataActions';
 
 const styles = {
     deleteButton: {
         position: 'absolute',
-        top: '50%',
+        top: '10%',
         left: '90%'
     }
 }

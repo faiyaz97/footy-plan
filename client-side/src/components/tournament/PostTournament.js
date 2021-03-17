@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import MyButton from '../utility/MyButton';
+import MyButton from '../../utility/MyButton';
 // MUI Stuff
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -14,20 +14,23 @@ import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
 // Redux stuff
 import { connect } from 'react-redux';
-import { postTournament } from '../redux/actions/dataActions';
+import { postTournament, clearErrors } from '../../redux/actions/dataActions';
 
 const styles = theme => ({
     ...theme.forms,
     submitButton:{
-        position: 'relative'
+        position: 'relative',
+        float: 'right',
+        marginTop: 10,
+        marginBottom: 10
     },
     progressSpinner: {
         position: 'absolute'
     },
     closeButton: {
         position: 'absolute',
-        left: '90%',
-        top: '10%'
+        left: '91%',
+        top: '4%'
     }
 })
 
@@ -45,15 +48,15 @@ class PostTournament extends Component {
             });
         }
         if (!nextProps.UI.errors && !nextProps.UI.loading) {
-            this.setState({ name: ''});
-            this.handleClose();
-    }
+            this.setState({ name: '', open: false, errors: {} });
+        }
     
     }
     handleOpen = () => {
         this.setState({ open: true })
     };
     handleClose = () => {
+        this.props.clearErrors();
         this.setState({ open: false, errors: {} })
     };
     handleChange = (event) => {
@@ -109,6 +112,7 @@ class PostTournament extends Component {
 
 PostTournament.propTypes = {
     postTournament: PropTypes.func.isRequired,
+    clearErrors: PropTypes.func.isRequired,
     UI: PropTypes.object.isRequired
 };
 
@@ -116,4 +120,4 @@ const mapStateToProps = (state) => ({
     UI: state.UI
 })
 
-export default connect(mapStateToProps, { postTournament })(withStyles(styles)(PostTournament))
+export default connect(mapStateToProps, { postTournament, clearErrors })(withStyles(styles)(PostTournament))

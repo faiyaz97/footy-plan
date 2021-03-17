@@ -2,8 +2,8 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import MyButton from '../utility/MyButton'
-import PostTournament from './PostTournament';
+import MyButton from '../../utility/MyButton'
+import PostTournament from '../tournament/PostTournament';
 
 // material-ui stuff
 import AppBar from '@material-ui/core/AppBar';
