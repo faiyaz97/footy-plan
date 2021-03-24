@@ -5,6 +5,7 @@ import MyButton from '../../utility/MyButton';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import Comments from './Comments';
+import CommentForm from './CommentForm';
 // MUI Stuff
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -19,7 +20,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import UnfoldMore from '@material-ui/icons/UnfoldMore';
 // Redux stuff
 import { connect } from 'react-redux';
-import { getTournament } from '../../redux/actions/dataActions';
+import { getTournament, clearErrors } from '../../redux/actions/dataActions';
 
 const styles = theme => ({
     ...theme.forms,
@@ -59,6 +60,7 @@ class TournamentDialog extends Component{
     }
     handleClose = () => {
         this.setState({ open: false });
+        this.props.clearErrors();
     }
     render(){
         const { 
@@ -102,6 +104,7 @@ class TournamentDialog extends Component{
                         </Typography>
                 </Grid>
                 <hr className={classes.visibleSeparator}/>
+                <CommentForm tournamentId={tournamentId} />
                 <Comments  comments={comments}/>
             </Grid>
         )
@@ -126,6 +129,7 @@ class TournamentDialog extends Component{
 }
 
 TournamentDialog.propTypes = {
+    clearErrors: PropTypes.func.isRequired,
     getTournament: PropTypes.func.isRequired,
     tournamentId: PropTypes.string.isRequired,
     userHandle: PropTypes.string.isRequired,
@@ -139,7 +143,8 @@ const mapStateToProps = state => ({
 })
 
 const mapActionsToProps = {
-    getTournament
+    getTournament,
+    clearErrors
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(TournamentDialog));

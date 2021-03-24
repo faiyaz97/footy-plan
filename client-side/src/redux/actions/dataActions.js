@@ -1,4 +1,4 @@
-import { SET_TOURNAMENT, SET_TOURNAMENTS, LOADING_DATA, STOP_LOADING_UI, DELETE_TOURNAMENT, LOADING_UI, CLEAR_ERRORS, SET_ERRORS, POST_TOURNAMENT } from '../types';
+import { SET_TOURNAMENT, SET_TOURNAMENTS, LOADING_DATA, STOP_LOADING_UI, DELETE_TOURNAMENT, LOADING_UI, CLEAR_ERRORS, SET_ERRORS, POST_TOURNAMENT, SUBMIT_COMMENT } from '../types';
 import axios from 'axios';
 
 // get all tournaments
@@ -45,7 +45,7 @@ export const getTournament = (tournamentId) => (dispatch) => {
           type: POST_TOURNAMENT,
           payload: res.data
         });
-        dispatch({type: CLEAR_ERRORS});
+        dispatch(clearErrors())
       })
       .catch((err) => {
         dispatch({
@@ -54,6 +54,23 @@ export const getTournament = (tournamentId) => (dispatch) => {
         });
       });
   };
+
+  export const submitComment = (tournamentId, commentData) => (dispatch) => {
+    axios.post(`/tournament/${tournamentId}/comment`, commentData)
+      .then(res => {
+        dispatch({
+          type: SUBMIT_COMMENT,
+          payload: res.data
+        });
+        dispatch(clearErrors())
+      })
+      .catch(err => {
+        dispatch({
+          type: SET_ERRORS,
+          payload: err.response.data
+        });
+      });
+  }
 
 
   export const deleteTournament = (tournamentId) => (dispatch) => {
