@@ -123,7 +123,7 @@ exports.signup = (req, res) => {
         userData.tournaments = [];
         data.forEach((doc) => {
           userData.tournaments.push({
-            body: doc.data().body,
+            name: doc.data().name,
             createdAt: doc.data().createdAt,
             userHandle: doc.data().userHandle,
             userImage: doc.data().userImage,
