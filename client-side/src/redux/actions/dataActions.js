@@ -1,4 +1,4 @@
-import { SET_TOURNAMENT, SET_TOURNAMENTS, LOADING_DATA, STOP_LOADING_UI, DELETE_TOURNAMENT, LOADING_UI, CLEAR_ERRORS, SET_ERRORS, POST_TOURNAMENT, SUBMIT_COMMENT } from '../types';
+import { SET_TOURNAMENT, SET_TOURNAMENTS, LOADING_DATA, STOP_LOADING_UI, DELETE_TOURNAMENT, LOADING_UI, CLEAR_ERRORS, SET_ERRORS, POST_TOURNAMENT, SUBMIT_COMMENT, LOADING_USER } from '../types';
 import axios from 'axios';
 
 // get all tournaments
@@ -80,6 +80,24 @@ export const getTournament = (tournamentId) => (dispatch) => {
       })
       .catch(err => console.log(err));
   }
+
+  export const getUserData = (userHandle) => (dispatch) => {
+    dispatch({ type: LOADING_DATA });
+    axios
+      .get(`/user/${userHandle}`)
+      .then((res) => {
+        dispatch({
+          type: SET_TOURNAMENTS,
+          payload: res.data.tournaments
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: SET_TOURNAMENTS,
+          payload: null
+        });
+      });
+  };
 
   export const clearErrors = () => dispatch => {
     dispatch({ type: CLEAR_ERRORS })
