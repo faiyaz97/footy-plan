@@ -21,6 +21,7 @@ import login from "./pages/login";
 import signup from "./pages/signup";
 import user from "./pages/user";
 import axios from 'axios';
+import tournament from "./pages/tournament";
 
 const theme = createMuiTheme(themeFile);
 
@@ -57,6 +58,8 @@ function App() {
                 component={signup}
               />
               <Route exact path="/users/:handle" component={user} />
+              {/* ho modificato qua */}
+              <Route exact path="/tournaments/:tournamentId" component={tournament} />
             </Switch>
           </div>
         </Router>
