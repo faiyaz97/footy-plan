@@ -55,6 +55,35 @@ exports.getAllTournaments = (req, res) => {
 
 
 
+  // exports.getTournament = (req, res) => {
+  //   let tournamentData = {};
+  //   db.doc(`/tournaments/${req.params.tournamentId}`)
+  //     .get()
+  //     .then((doc) => {
+  //       if (!doc.exists) {
+  //         return res.status(404).json({ error: 'Tournament not found' });
+  //       }
+  //       tournamentData = doc.data();
+  //       tournamentData.tournamentId = doc.id;
+  //       return db
+  //         .collection('comments')
+  //         .orderBy('createdAt', 'desc')
+  //         .where('tournamentId', '==', req.params.tournamentId)
+  //         .get();
+  //     })
+  //     .then((data) => {
+  //       tournamentData.comments = [];
+  //       data.forEach((doc) => {
+  //         tournamentData.comments.push(doc.data());
+  //       });
+  //       return res.json(tournamentData);
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //       res.status(500).json({ error: err.code });
+  //     });
+  // };
+
   exports.getTournament = (req, res) => {
     let tournamentData = {};
     db.doc(`/tournaments/${req.params.tournamentId}`)
@@ -75,6 +104,30 @@ exports.getAllTournaments = (req, res) => {
         tournamentData.comments = [];
         data.forEach((doc) => {
           tournamentData.comments.push(doc.data());
+        });
+      })
+      .then(() => {
+        return db
+          .collection('matches')
+          .where('tournamentId', '==', req.params.tournamentId)
+          .get();
+      })
+      .then((data) => {
+        tournamentData.matches = [];
+        data.forEach((doc) => {
+          tournamentData.matches.push(doc.data());
+        });
+      })
+      .then(() => {
+        return db
+          .collection('teams')
+          .where('tournamentId', '==', req.params.tournamentId)
+          .get();
+      })
+      .then((data) => {
+        tournamentData.teams = [];
+        data.forEach((doc) => {
+          tournamentData.teams.push(doc.data());
         });
         return res.json(tournamentData);
       })
