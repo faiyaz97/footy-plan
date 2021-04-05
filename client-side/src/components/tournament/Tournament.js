@@ -45,9 +45,11 @@ class Tournament extends Component {
                 authenticated, credentials: { handle }
             } 
         } = this.props;
+
         const deleteButton = authenticated && userHandle === handle ? (
             <DeleteTournament tournamentId={tournamentId}/>
         ) : null
+        
         return (
             <Card className={classes.card}>
                 <CardMedia className={classes.image} image={userImage} title="Profile image"/>

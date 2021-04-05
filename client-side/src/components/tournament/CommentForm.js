@@ -6,6 +6,8 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
 // Redux stuff
 import { connect } from 'react-redux';
@@ -47,11 +49,13 @@ const styles = theme => ({
 
         const CommentFormMarkup = authenticated ? (
             <Grid item sm={12} style={{ textAlign: 'center'}}>
-                <form onSubmit={this.handleSubmit}>
+                <Card>
+                    <CardContent>
+                    <form onSubmit={this.handleSubmit}>
                     <TextField
                         name="body"
                         type="text"
-                        label="Comment on tournament"
+                        label="Post a communication"
                         error={errors.comment ? true : false}
                         helperText={errors.comment}
                         value={this.state.body}
@@ -64,8 +68,10 @@ const styles = theme => ({
                             color="primary"
                             className={classes.button}>
                             Submit</Button>
-                </form>
-                <hr className={classes.visibleSeperator}/>
+                    </form>
+
+                    </CardContent>
+                </Card>
             </Grid>
         ) : null
         return CommentFormMarkup

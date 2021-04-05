@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import Tournament from '../components/tournament/Tournament';
+import TournamentDetails from '../components/tournament/TournamentDetails';
 import StaticProfile from '../components/profile/StaticProfile';
 import withStyles from '@material-ui/core/styles/withStyles';
+
 
 
 import { connect } from 'react-redux';
@@ -34,6 +35,7 @@ class tournament extends Component {
     state = {
         profile: null
     }
+
     componentDidMount(){
         const tournamentId = this.props.match.params.tournamentId;
         console.log("TEST " + tournamentId);
@@ -46,25 +48,35 @@ class tournament extends Component {
         //      })
         //     .catch(err => console.log(err));
     }
+
     render() {
         const { tournament } = this.props.data;
 
         const { classes } = this.props;
 
-        console.log("TOURN? " + tournament.name);
+        console.log("TOURN? " + tournament);
 
         
 
         return (
 
-            <Grid container spacing={0} direction="row" justify="center" alignItems="center">
-                <Grid item sm={2} xs={10}>
+            <Grid container spacing={0} direction="row" alignItems="center">
+                <Grid item sm={2} xs={12}>
                     <img src={tournament.userImage} height className={classes.image}/>
                 </Grid>
-                <Grid item sm={6} xs={10}>
-                    <Typography variant="h4" color="primary" className={classes.typography}>{tournament.name}</Typography>
+                <Grid item sm={10} xs={12}>
+                    <Typography variant="h4" color="primary" className={classes.typography}><b>{tournament.name}</b></Typography>
+            </Grid>
+                <Grid container>
+                    <Grid item xs={12}>
+                        <TournamentDetails tournament={tournament}/>
+                    </Grid>  
                 </Grid>
             </Grid>
+
+            
+
+            
 
             
 
