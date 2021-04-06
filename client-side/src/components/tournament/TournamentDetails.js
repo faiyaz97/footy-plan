@@ -51,9 +51,30 @@ const styles = {
     content: {
         
     },
+
     typography: {
         paddingBottom: 10
-      }
+    },
+
+
+    teamCard: {
+        position: 'relative',
+        display: 'flex',
+        marginBottom: -10,
+        alignItems: 'center',
+        padding: "0px 20px 0px 20px"
+    },
+    teamsImage: {
+        width: 50,
+        height: 50,
+        objectFit: 'cover',
+        borderRadius: '50%',
+    },
+    teamContent: {
+        padding: 20,
+
+    }
+
 }
 
 class TournamentDetails extends Component {
@@ -83,7 +104,7 @@ class TournamentDetails extends Component {
         dayjs.extend(relativeTime);
         const { classes,
              tournament: { 
-                 name, createdAt, userImage, userHandle, tournamentId, commentCount, teamsN, type, format, location, description, comments
+                 name, createdAt, userImage, userHandle, tournamentId, commentCount, teamsN, type, format, location, description, comments, teams
                 },
             user: { 
                 authenticated, credentials: { handle }
@@ -94,6 +115,20 @@ class TournamentDetails extends Component {
         const commentForm = authenticated && userHandle === handle ? (
             <CommentForm tournamentId={tournamentId} />
         ) : null
+
+
+        let teamsMarkup = (
+            teams.map((team) => 
+            <Card className={classes.teamCard}>
+                <img src={team.teamLogo} height className={classes.teamsImage}/>
+                <CardContent className={classes.teamContent}>
+                    <Typography variant="h6">
+                        {team.name}
+                    </Typography>
+                </CardContent>  
+            </Card>
+            )
+        )
         
         return (
             <Grid className={classes.grid} container spacing={2} direction="row" >
@@ -122,7 +157,7 @@ class TournamentDetails extends Component {
 
                         <CardContent className={classes.content}>
                             <Typography variant="h6" className={classes.typography}>
-                                {name}
+                                {teamsN}
                             </Typography>
                             <Typography variant="h6" className={classes.typography}>
                                 {type}
@@ -156,6 +191,10 @@ class TournamentDetails extends Component {
                             </Paper>
                             {commentForm}
                         </Card>
+                    </Grid>
+                    <Grid item sm={4} xs={12}>
+                        <Typography variant="h5" color="primary" className={classes.typography}><b>Teams</b></Typography>
+                        {teamsMarkup}                        
                     </Grid>
                 </Grid>
             </Grid>
