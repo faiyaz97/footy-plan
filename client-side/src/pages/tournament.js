@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import TournamentDetails from '../components/tournament/TournamentDetails';
+import TournamentMatches from '../components/tournament/TournamentMatches';
 import StaticProfile from '../components/profile/StaticProfile';
 import withStyles from '@material-ui/core/styles/withStyles';
 
@@ -27,7 +28,10 @@ const styles = {
     typography: {
         flexGrow: 1,
         align: "center"
-      }
+      },
+    title: {
+        paddingBottom: "20px"
+    }
 
 }
 
@@ -56,31 +60,40 @@ class tournament extends Component {
 
         console.log("TOURN? " + tournament);
 
+
+        const page = this.props.match.params.page
+
+        const pageView = page === "details" ? (
+            <Grid container>
+                <Grid item xs={12}>
+                    <TournamentDetails tournament={tournament}/>
+                </Grid>  
+            </Grid>
+        ) : (
+            <Grid container>
+                <Grid item xs={12}>
+                    <TournamentMatches tournament={tournament}/>
+                </Grid>  
+            </Grid>
+        )
+
         
 
         return (
 
             <Grid container spacing={0} direction="row" alignItems="center">
-                <Grid item sm={2} xs={12}>
-                    <img src={tournament.userImage} height className={classes.image}/>
+                <Grid container className={classes.title}>
+                    <Grid item sm={2} xs={12}>
+                        <img src={tournament.userImage} height className={classes.image}/>
+                    </Grid>
+                    <Grid item sm={10} xs={12}>
+                        <Typography variant="h4" color="primary" className={classes.typography}><b>{tournament.name}</b></Typography>
+                    </Grid>
                 </Grid>
-                <Grid item sm={10} xs={12}>
-                    <Typography variant="h4" color="primary" className={classes.typography}><b>{tournament.name}</b></Typography>
+                
+                {pageView}
+                
             </Grid>
-                <Grid container>
-                    <Grid item xs={12}>
-                        <TournamentDetails tournament={tournament}/>
-                    </Grid>  
-                </Grid>
-            </Grid>
-
-            
-
-            
-
-            
-
-
         )
     }
 }

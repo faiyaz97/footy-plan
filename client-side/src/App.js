@@ -59,7 +59,8 @@ function App() {
               />
               <Route exact path="/users/:handle" component={user} />
               {/* ho modificato qua */}
-              <Route exact path="/tournaments/:tournamentId" component={tournament} />
+              <Route exact path="/tournaments/:page/:tournamentId" component={tournament} />
+              <Route exact path="/tournaments/:page/:tournamentId" component={tournament} />
             </Switch>
           </div>
         </Router>

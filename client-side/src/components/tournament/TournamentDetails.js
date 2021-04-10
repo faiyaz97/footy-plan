@@ -11,6 +11,7 @@ import StaticProfile from '../../components/profile/StaticProfile';
 import axios from 'axios';
 import Comments from './Comments';
 import CommentForm from './CommentForm';
+import Button from '@material-ui/core/Button';
 
 // MUI stuffs
 import Card from '@material-ui/core/Card';
@@ -28,7 +29,7 @@ import { CardActions } from '@material-ui/core';
 
 const styles = {
     grid:{
-        padding: '10px 0px 10px 0px'
+        
     },
     card: {
         position: 'relative',
@@ -73,6 +74,12 @@ const styles = {
     teamContent: {
         padding: 20,
 
+    },
+    secondNav: {
+        paddingBottom: "20px"
+    },
+    container: {
+        paddingBottom: "20px"
     }
 
 }
@@ -131,56 +138,78 @@ class TournamentDetails extends Component {
         )
         
         return (
-            <Grid className={classes.grid} container spacing={2} direction="row" >
-                <Grid item sm={8} xs={12}>
-                    <Typography variant="h5" color="primary" className={classes.typography}><b>Tournament Details</b></Typography>
-                    <Card className={classes.card}>
-                        <CardContent className={classes.content}>
-                            <Typography variant="h6" className={classes.typography}>
-                                <b>
-                                Teams #:
-                                </b>
-                            </Typography>
-                            <Typography variant="h6" className={classes.typography}>
-                                <b>Type:</b>
-                            </Typography>
-                            <Typography variant="h6" className={classes.typography}>
-                                <b>Format:</b>
-                            </Typography>
-                            <Typography variant="h6" className={classes.typography}>
-                                <b>Location:</b>
-                            </Typography>
-                            <Typography variant="h6">
-                                <b>Description:</b>
-                            </Typography>
-                        </CardContent>
+            
+            <Grid container className={classes.grid} direction="row" >
 
-                        <CardContent className={classes.content}>
-                            <Typography variant="h6" className={classes.typography}>
-                                {teamsN}
-                            </Typography>
-                            <Typography variant="h6" className={classes.typography}>
-                                {type}
-                            </Typography>
-                            <Typography variant="h6" className={classes.typography}>
-                                {format}
-                            </Typography>
-                            <Typography variant="h6" className={classes.typography}>
-                                {location}
-                            </Typography>
-                            <Typography variant="h6">
-                                {description}
-                            </Typography>
-                        </CardContent>
-                     </Card>
+                <Grid container className={classes.secondNav} spacing={2} >
+                    <Grid item >
+                        <Button variant="contained" color="primary" component={Link} to={`/tournaments/details/${tournamentId}`}>Details</Button>
+                    </Grid>
+                    <Grid item >
+                        <Button variant="outlined" color="primary" component={Link} to={`/tournaments/matches/${tournamentId}`}>Matches</Button>
+                    </Grid>
+                    <Grid item >
+                        <Button variant="outlined" color="primary">Player stats</Button>
+                    </Grid>
+                    <Grid item >
+                        <Button variant="outlined" color="primary">Settings</Button>
+                    </Grid>
                 </Grid>
-                <Grid item sm={4} xs={12}>
-                    <Typography variant="h5" color="primary" className={classes.typography}><b>Tournament Organiser</b></Typography>
-                    <StaticProfile profile={this.state.profile}/>
+
+                <Grid container className={classes.container} spacing={2} >
+                    <Grid item sm={8} xs={12}>
+                        <Typography variant="h5" color="primary" className={classes.typography}><b>Tournament Details</b></Typography>
+                        <Card className={classes.card}>
+                            <CardContent className={classes.content}>
+                                <Typography variant="h6" className={classes.typography}>
+                                    <b>
+                                    Teams #:
+                                    </b>
+                                </Typography>
+                                <Typography variant="h6" className={classes.typography}>
+                                    <b>Type:</b>
+                                </Typography>
+                                <Typography variant="h6" className={classes.typography}>
+                                    <b>Format:</b>
+                                </Typography>
+                                <Typography variant="h6" className={classes.typography}>
+                                    <b>Location:</b>
+                                </Typography>
+                                <Typography variant="h6">
+                                    <b>Description:</b>
+                                </Typography>
+                            </CardContent>
+
+                            <CardContent className={classes.content}>
+                                <Typography variant="h6" className={classes.typography}>
+                                    {teamsN}
+                                </Typography>
+                                <Typography variant="h6" className={classes.typography}>
+                                    {type}
+                                </Typography>
+                                <Typography variant="h6" className={classes.typography}>
+                                    {format}
+                                </Typography>
+                                <Typography variant="h6" className={classes.typography}>
+                                    {location}
+                                </Typography>
+                                <Typography variant="h6">
+                                    {description}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+
+                    <Grid item sm={4} xs={12}>
+                        <Typography variant="h5" color="primary" className={classes.typography}><b>Tournament Organiser</b></Typography>
+                        <StaticProfile profile={this.state.profile}/>
+                    </Grid>
                 </Grid>
+
+            
                                 
                 
-                <Grid className={classes.grid} container spacing={2} direction="row" >
+                <Grid container className={classes.container} spacing={2} direction="row" >
                     <Grid item sm={8} xs={12}>
                         <Typography variant="h5" color="primary" className={classes.typography}><b>Organiser Communications</b></Typography>
                         <Card className={classes.commentsCard}>
