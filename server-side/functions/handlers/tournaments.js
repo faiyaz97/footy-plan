@@ -14,7 +14,13 @@ exports.getAllTournaments = (req, res) => {
             userHandle: doc.data().userHandle,
             createdAt: doc.data().createdAt,
             commentCount: doc.data().commentCount,
-            userImage: doc.data().userImage
+            userImage: doc.data().userImage,
+            teamsN: doc.data().teamsN,
+            type: doc.data().type,
+            format: doc.data().format,
+            location: doc.data().location,
+            description: doc.data().description,
+            date: doc.data().date,
           });
         });
         return res.json(tournaments);
