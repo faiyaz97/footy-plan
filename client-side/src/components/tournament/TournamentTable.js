@@ -7,6 +7,8 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import MyButton from '../../utility/MyButton';
 import DeleteTournament from './DeleteTournament';
 import TournamentDialog from './TournamentDialog';
+import  { Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router'
 
 // MUI stuffs
 import Card from '@material-ui/core/Card';
@@ -18,6 +20,7 @@ import { DataGrid } from '@material-ui/data-grid';
 
 import { connect } from 'react-redux' ;
 import { deleteTournament } from '../../redux/actions/dataActions';
+import { LinkOffRounded } from '@material-ui/icons';
 
 
 const styles = {
@@ -49,6 +52,7 @@ const styles = {
 }
 
 const columns = [
+    { field: 'tournamentId', headerName: 'TID', width: 0, hide: true},
     { field: 'id', headerName: '#', width: 70},
     { field: 'tournamentName', headerName: 'Tournament Name', width: 180 },
     { field: 'teamsN', headerName: 'Teams #', width: 110, },
@@ -73,7 +77,17 @@ let rows = [];
 
 
 
+
+
+
+
 class TournamentTable extends Component {
+
+    handleRowClick = (params) => {
+        const link = '/tournaments/details/' + params.row.tournamentId;
+        console.log(link);
+        this.props.history.push(link) 
+    }
 
     
 
@@ -83,32 +97,45 @@ class TournamentTable extends Component {
         const { classes } = this.props;
 
         const tournaments = this.props.tournaments;
-        
-        let count = 0;
 
-        tournaments.map((tournament) => {
-
-            let row = { id: 0, tournamentName: "", teamsN: 0, type: "", format: "", location: "", description: "", date: "" }
             
-            row.id = count;
-            row.tournamentName = tournament.name;
-            row.teamsN = tournament.teamsN;
-            row.type = tournament.type;
-            row.format = tournament.format;
-            row.location = tournament.location;
-            row.description = tournament.description;
-            row.date = tournament.date;
+        
+        let count = 1;
 
-            rows.push(row);
-            console.log("TORNEO " + count + " :" + JSON.stringify(tournament))
-            count = count + 1;
-        })
+        if(rows.length < tournaments.length){
+
+            tournaments.map((tournament) => {
+
+                let row = { tournamentId: "", id: 0, tournamentName: "", teamsN: 0, type: "", format: "", location: "", description: "", date: "" }
+                
+                row.tournamentId = tournament.tournamentId;
+                row.id = count;
+                row.tournamentName = tournament.name;
+                row.teamsN = tournament.teamsN;
+                row.type = tournament.type;
+                row.format = tournament.format;
+                row.location = tournament.location;
+                row.description = tournament.description;
+                row.date = tournament.date;
+    
+                rows.push(row);
+                //console.log("TORNEO " + count + " :" + JSON.stringify(tournament))
+                count = count + 1;
+            })
+
+        }
+        
+
+        
+
+      
+        
 
 
         
         return (
             <div style={{ height: 400, width: '100%' }}>
-              <DataGrid autoHeight className={classes.table} rows={rows} columns={columns} pageSize={15} />
+              <DataGrid autoHeight className={classes.table} rows={rows} columns={columns} pageSize={15} onRowClick={this.handleRowClick}  />
             </div>
           );
     }
@@ -128,4 +155,4 @@ const mapActionsToProps = {
     
 }
 
-export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(TournamentTable));
+export default withRouter(connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(TournamentTable)));
