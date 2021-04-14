@@ -24,6 +24,9 @@ import { LinkOffRounded } from '@material-ui/icons';
 
 
 const styles = {
+    title: {
+        marginBottom: '10px',
+    },
     table : {
 
         '& .MuiDataGrid-row.Mui-odd': {
@@ -135,7 +138,8 @@ class TournamentTable extends Component {
         
         return (
             <div style={{ height: 400, width: '100%' }}>
-              <DataGrid autoHeight className={classes.table} rows={rows} columns={columns} pageSize={15} onRowClick={this.handleRowClick}  />
+                <Typography className={classes.title} variant="h5" color="primary"><b>Tournaments results</b></Typography>
+                <DataGrid autoHeight className={classes.table} rows={rows} columns={columns} pageSize={10} onRowClick={this.handleRowClick}  />
             </div>
           );
     }

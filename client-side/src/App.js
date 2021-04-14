@@ -14,14 +14,15 @@ import { logoutUser, getUserData } from './redux/actions/userActions';
 // components test
 import NavBar from "./components/layout/Navbar/Navbar";
 import AuthRoute from "./utility/AuthRoute";
+import axios from 'axios';
 
 // Pages
 import home from "./pages/home";
 import login from "./pages/login";
 import signup from "./pages/signup";
 import user from "./pages/user";
-import axios from 'axios';
 import tournament from "./pages/tournament";
+import createTournament from "./pages/createTournament";
 
 const theme = createMuiTheme(themeFile);
 
@@ -61,6 +62,7 @@ function App() {
               {/* ho modificato qua */}
               <Route exact path="/tournaments/:page/:tournamentId" component={tournament} />
               <Route exact path="/tournaments/:page/:tournamentId" component={tournament} />
+              <Route exact path="/createTournament" component={createTournament} />
             </Switch>
           </div>
         </Router>

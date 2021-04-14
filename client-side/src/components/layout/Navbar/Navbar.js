@@ -11,8 +11,8 @@ function Navbar() {
         <nav className="navbar">
           <div className="nav-container">
             <NavLink exact to="/" className="nav-logo">
-              Football TM
-              <i className="fa fa-code"></i>
+              Football TM 
+              <i className="far fa-futbol"></i>
             </NavLink>
   
             <ul className={click ? "nav-menu active" : "nav-menu"}>
@@ -24,29 +24,18 @@ function Navbar() {
                   className="nav-links"
                   onClick={handleClick}
                 >
-                  Home
+                  Find a Tournament
                 </NavLink>
               </li>
               <li className="nav-item">
                 <NavLink
                   exact
-                  to="/about"
+                  to="/createTournament"
                   activeClassName="active"
                   className="nav-links"
                   onClick={handleClick}
                 >
-                  About
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  exact
-                  to="/blog"
-                  activeClassName="active"
-                  className="nav-links"
-                  onClick={handleClick}
-                >
-                  Blog
+                  Create a Tournament
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -58,6 +47,17 @@ function Navbar() {
                   onClick={handleClick}
                 >
                   Contact Us
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  exact
+                  to="/login"
+                  activeClassName="active"
+                  className="nav-links"
+                  onClick={handleClick}
+                >
+                  Login
                 </NavLink>
               </li>
             </ul>

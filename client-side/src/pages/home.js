@@ -29,7 +29,6 @@ class home extends Component {
 
         return (
             <Grid container>
-                <Typography variant="h5" color="primary"><b>Search Tournament</b></Typography>
                 <Grid item sm={12} xs={12}>
                     {recentTournamentsMarkup}
                 </Grid>
