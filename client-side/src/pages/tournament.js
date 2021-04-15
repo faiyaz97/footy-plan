@@ -84,7 +84,7 @@ class tournament extends Component {
             <Grid container spacing={0} direction="row" alignItems="center">
                 <Grid container className={classes.title}>
                     <Grid item sm={2} xs={12}>
-                        <img src={tournament.userImage} height className={classes.image}/>
+                        <img src={tournament.logo} height className={classes.image}/>
                     </Grid>
                     <Grid item sm={10} xs={12}>
                         <Typography variant="h4" color="primary" className={classes.typography}><b>{tournament.name}</b></Typography>

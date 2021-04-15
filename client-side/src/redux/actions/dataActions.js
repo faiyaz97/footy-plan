@@ -37,6 +37,7 @@ export const getTournament = (tournamentId) => (dispatch) => {
 
   // post a torunament
   export const postTournament = (newTournament) => (dispatch) => {
+    console.log(newTournament);
     dispatch({ type: LOADING_UI });
     axios
       .post('/tournament', newTournament)
@@ -46,6 +47,7 @@ export const getTournament = (tournamentId) => (dispatch) => {
           payload: res.data
         });
         dispatch(clearErrors())
+        
       })
       .catch((err) => {
         dispatch({

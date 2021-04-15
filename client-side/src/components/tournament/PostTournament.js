@@ -64,7 +64,8 @@ class PostTournament extends Component {
     };
     handleSubmit = (event) => {
         event.preventDefault();
-        this.props.postTournament({ name: this.state.name });
+        //this.props.postTournament({ name: this.state.name });
+        console.log(this.state);
     };
     render(){
         const { errors } = this.state;
