@@ -35,9 +35,27 @@ exports.getAllTournaments = (req, res) => {
     if(req.body.name.trim() === '') {
       return res.status(400).json({ name: 'Name must not be empty'});
     }
+    if(req.body.location.trim() === '') {
+      return res.status(400).json({ location: 'Location must not be empty'});
+    }
+    if(req.body.date.trim() === '') {
+      return res.status(400).json({ date: 'Date must not be empty'});
+    }
+    if(req.body.description.trim() === '') {
+      return res.status(400).json({ description: 'Description must not be empty'});
+    }
+    
   
     const newTournament = {
       name: req.body.name,
+      location: req.body.location,
+      date: req.body.date,
+      description: req.body.description,
+      teamsN: req.body.teamsN,
+      type: req.body.type,
+      format: req.body.format,
+      logo: req.body.logo,
+
       userHandle: req.user.handle,
       userImage: req.user.imageUrl,
       createdAt: new Date().toISOString(),
@@ -58,37 +76,6 @@ exports.getAllTournaments = (req, res) => {
       });
     
   }
-
-
-
-  // exports.getTournament = (req, res) => {
-  //   let tournamentData = {};
-  //   db.doc(`/tournaments/${req.params.tournamentId}`)
-  //     .get()
-  //     .then((doc) => {
-  //       if (!doc.exists) {
-  //         return res.status(404).json({ error: 'Tournament not found' });
-  //       }
-  //       tournamentData = doc.data();
-  //       tournamentData.tournamentId = doc.id;
-  //       return db
-  //         .collection('comments')
-  //         .orderBy('createdAt', 'desc')
-  //         .where('tournamentId', '==', req.params.tournamentId)
-  //         .get();
-  //     })
-  //     .then((data) => {
-  //       tournamentData.comments = [];
-  //       data.forEach((doc) => {
-  //         tournamentData.comments.push(doc.data());
-  //       });
-  //       return res.json(tournamentData);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //       res.status(500).json({ error: err.code });
-  //     });
-  // };
 
   exports.getTournament = (req, res) => {
     let tournamentData = {};
