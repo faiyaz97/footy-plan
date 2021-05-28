@@ -12,25 +12,32 @@ import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import { getTournaments } from '../redux/actions/dataActions';
 
+// home page component
 class home extends Component {
-
+    // invoked immediately after this component is mounted
     componentDidMount(){
+        // get tournament props
         this.props.getTournaments();
     }
+    // render the page
     render() {
+        // tournaments and loading props
         const { tournaments, loading } = this.props.data;
-        let recentTournamentsMarkup = !loading ? (
+        // check if the tournament table loaded
+        let tournamentTableMarkup = !loading ? (
             // tournaments.map((tournament) => 
             //     <Tournament key={tournament.tournamentId} tournament={tournament}/>)
             <TournamentTable tournaments={tournaments}/>
         ) : (
+            // display loading... text until te tournament table is ready
             <p>Loading...</p>
         );
 
         return (
+            // grid used to dsiplay the tournament table or the loading text
             <Grid container>
                 <Grid item sm={12} xs={12}>
-                    {recentTournamentsMarkup}
+                    {tournamentTableMarkup}
                 </Grid>
             </Grid>
         )

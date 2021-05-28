@@ -41,12 +41,17 @@ if (token) {
 
 function App() {
   return (
+    // css
     <ThemeProvider theme={theme}>
       <Provider store={store}>
+         {/* Router */} 
         <Router>
+           {/* render navigation bar component */} 
           <NavBar />
           <div className="container">
+            {/* routes switch */} 
             <Switch>
+               {/* login and sign up routes */} 
               <Route exact path="/" component={home} />
               <AuthRoute
                 exact
@@ -58,10 +63,11 @@ function App() {
                 path="/signup"
                 component={signup}
               />
+               {/* user page route */} 
               <Route exact path="/users/:handle" component={user} />
-              {/* ho modificato qua */}
+              {/* tournaments page route */}
               <Route exact path="/tournaments/:page/:tournamentId" component={tournament} />
-              <Route exact path="/tournaments/:page/:tournamentId" component={tournament} />
+               {/* create tournament page route*/} 
               <Route exact path="/createTournament" component={createTournament} />
             </Switch>
           </div>
@@ -70,5 +76,4 @@ function App() {
     </ThemeProvider>
   );
 }
-
 export default App;

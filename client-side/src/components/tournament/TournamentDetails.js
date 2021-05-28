@@ -89,11 +89,8 @@ class TournamentDetails extends Component {
     state = {
         profile: null
     }
-
     render() {
-
         const { profile } = this.state;
-
         if (profile === null) {
             const handle = this.props.tournament.userHandle;
             console.log("TEST!!: " + this.props.tournament.userHandle);
@@ -107,7 +104,6 @@ class TournamentDetails extends Component {
                 .catch(err => console.log(err));
             return <p>Loading...</p>
         }
-        
         dayjs.extend(relativeTime);
         const { classes,
              tournament: { 

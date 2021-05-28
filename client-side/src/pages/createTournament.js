@@ -28,6 +28,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+// css style
 const styles = {
     image: {
         width: 120,
@@ -47,6 +48,7 @@ const styles = {
 
 class createTournament extends Component {
 
+    // initialize tournament data object
     state = {
         name: '',
         teamsN: 4,
@@ -58,7 +60,7 @@ class createTournament extends Component {
         logo: '',
         errors: {}
     };
-
+    // invoked immediately after this component is mounted
     componentWillReceiveProps(nextProps){
         if(nextProps.UI.errors){
             this.setState({
@@ -74,13 +76,14 @@ class createTournament extends Component {
     
 
     handleChange = (event) => {
-        //this.props.clearErrors();
+        // different defauls logos url
         const logos = [
             "https://firebasestorage.googleapis.com/v0/b/football-tournament-ffu.appspot.com/o/logo1.jpg?alt=media&token=38d0740c-814c-4461-8999-a5f3dbede17c",
             "https://firebasestorage.googleapis.com/v0/b/football-tournament-ffu.appspot.com/o/logo2.jpg?alt=media&token=b8cdaa50-366a-4700-ac42-9ed2fb94b5d6",
             "https://firebasestorage.googleapis.com/v0/b/football-tournament-ffu.appspot.com/o/logo3.jpg?alt=media&token=30e4a4fb-bccd-4419-90d7-d6983a6fe182",
             "https://firebasestorage.googleapis.com/v0/b/football-tournament-ffu.appspot.com/o/logo4.jpg?alt=media&token=c7cdb482-90a9-4c00-89bc-aa01528cb789"
         ]
+        // generate random number from 0 to 3
         const rand = Math.floor(Math.random() * 4)
 
         this.setState({ 
@@ -91,25 +94,26 @@ class createTournament extends Component {
             logo: logos[rand]
         })
     };
+    // event handle when type change
     handleChangeType = (event) => {
         this.setState({ 
             type: event.target.value,
         })
     };
-
+    // event handle when format change
     handleChangeFormat = (event) => {
         this.setState({ 
             format: event.target.value,
         })
     };
-
+    // event handle when teamN change
     handleChangeTeamsN = (event) => {
         this.setState({ 
             teamsN: event.target.value,
         })
     };
 
-
+    // event handle when submit
     handleSubmit = (event) => {
         event.preventDefault();
         this.props.postTournament({ 
@@ -124,10 +128,11 @@ class createTournament extends Component {
         });
         console.log(this.state);
     };
-
+    // render the page
     render() {
-
+        // get errors
         const { errors } = this.state;
+        // get user authenticated
         const { 
             classes, 
             user: { 
@@ -135,16 +140,19 @@ class createTournament extends Component {
             }
         } = this.props;
 
+        // check if the user is authenticated
         if(!authenticated){
             console.log("AUTH: " + authenticated)
         }
 
+        // if the user is authenticated display the create tournament form, otherwise display e message which say that the user has to login
         const authText = (
             !authenticated ? (
                 <Grid container  justify="center">
                     <Grid item  xs='auto'>
                         <Card >
                             <CardContent>
+                                {/* display message */}
                                 <Typography variant="body1" className={classes.typography}>You have to&nbsp;
                                     <MuiLink component={Link} to={`/login`} variant="body1">
                                          login 
@@ -158,6 +166,7 @@ class createTournament extends Component {
             ) : (
                 <Grid container direction="row">
                     <Grid item sm={12} xs={12}>
+                        {/* create tournament form */}
                         <form onSubmit={this.handleSubmit}>
                             <Grid container direction="row">
                                 <Grid item sm={6} xs={12}>
@@ -270,6 +279,7 @@ class createTournament extends Component {
                                     </Card>
                                 </Grid>
                             </Grid>
+                            { /* submit button */}
                             <Button type="submit" variant="contained" color="primary"
                                 className={classes.submitButton}>
                                     Submit
@@ -279,8 +289,6 @@ class createTournament extends Component {
                 </Grid>
             )
         );
-        
-
         return (
 
             <Grid container spacing={0} direction="row" alignItems="center">
@@ -289,6 +297,7 @@ class createTournament extends Component {
                         <Typography variant="h5" color="primary" className={classes.typography}><b>Create Tournament</b></Typography>
                     </Grid>
                 </Grid>
+                {/* display form or login message */}
                 {authText}
             </Grid>
         )

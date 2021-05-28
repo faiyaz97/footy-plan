@@ -18,6 +18,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
+// css style
 const styles = {
     image: {
         width: 120,
@@ -35,64 +36,57 @@ const styles = {
 
 }
 
+// display tournament component
 class tournament extends Component {
+    // profile object
     state = {
         profile: null
     }
-
+    // invoked immediately after this component is mounted
     componentDidMount(){
+        // get tournament id
         const tournamentId = this.props.match.params.tournamentId;
-        console.log("TEST " + tournamentId);
+        // get tournament data
         this.props.getTournament(tournamentId);
-        // axios.get(`/tournament/${tournamentId}`)
-        //      .then(res => {
-        //          this.setState({
-        //              profile: res.data.user
-        //          })
-        //      })
-        //     .catch(err => console.log(err));
     }
 
+    // render page
     render() {
+        // torunament, classes, page props
         const { tournament } = this.props.data;
-
         const { classes } = this.props;
-
-        console.log("TOURN? " + tournament);
-
-
         const page = this.props.match.params.page
 
+        // display tournament details or matches page
         const pageView = page === "details" ? (
             <Grid container>
                 <Grid item xs={12}>
+                    {/* get TorunamentDetails component */}
                     <TournamentDetails tournament={tournament}/>
                 </Grid>  
             </Grid>
         ) : (
             <Grid container>
                 <Grid item xs={12}>
+                    {/* get TorunamentMatches component */}
                     <TournamentMatches tournament={tournament}/>
                 </Grid>  
             </Grid>
         )
-
-        
-
         return (
-
             <Grid container spacing={0} direction="row" alignItems="center">
                 <Grid container className={classes.title}>
                     <Grid item sm={2} xs={12}>
+                        {/* display tournament logo */}
                         <img src={tournament.logo} height className={classes.image}/>
                     </Grid>
                     <Grid item sm={10} xs={12}>
+                        {/* display tournament name */}
                         <Typography variant="h4" color="primary" className={classes.typography}><b>{tournament.name}</b></Typography>
                     </Grid>
                 </Grid>
-                
-                {pageView}
-                
+                {/* display matches or details page */}
+                {pageView}     
             </Grid>
         )
     }

@@ -175,8 +175,6 @@ class TournamentMatches extends Component {
         )
         
         return (
-            
-
             <Grid container className={classes.grid} direction="row" >
 
                 <Grid container className={classes.secondNav} spacing={2} >
